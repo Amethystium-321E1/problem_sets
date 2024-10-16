@@ -350,6 +350,27 @@ ggplot(performance_summary_d, aes(x = MusicCondition, y = MeanImprovementScore, 
        y = "Mean Improvement Score") +
   theme_minimal()
 ```
+```{r}
+performance_SEM_d = performance_diff_d |> 
+  group_by(ConfrontationalGame, MusicCondition) |> 
+  summarise(
+    MeanImprovementScore = mean(ImprovementScore), 
+    StandardDeviation = sd(ImprovementScore), 
+    n = n(), 
+    StandardErrorMean = StandardDeviation / sqrt(n)
+  )
+performance_SEM_d
+```
+```{r}
+ggplot(performance_SEM_d, aes(x = MusicCondition, y = MeanImprovementScore, fill = ConfrontationalGame)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = MeanImprovementScore - StandardErrorMean, ymax = MeanImprovementScore + StandardErrorMean),
+                position = position_dodge(0.9), width = 0.25) + 
+  labs(title = "Mean Improvement Score by Game Type and Music Condition",
+       x = "Music Condition",
+       y = "Mean Improvement Score") +
+  theme_minimal()
+```
 
 (Bonus: also calculate the SEM in the summary data, and then add errorbars to the plot with `geom_errorbar`!)
 
