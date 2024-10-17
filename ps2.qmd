@@ -350,6 +350,7 @@ ggplot(performance_summary_d, aes(x = MusicCondition, y = MeanImprovementScore, 
        y = "Mean Improvement Score") +
   theme_minimal()
 ```
+
 ```{r}
 performance_SEM_d = performance_diff_d |> 
   group_by(ConfrontationalGame, MusicCondition) |> 
@@ -361,6 +362,7 @@ performance_SEM_d = performance_diff_d |>
   )
 performance_SEM_d
 ```
+
 ```{r}
 ggplot(performance_SEM_d, aes(x = MusicCondition, y = MeanImprovementScore, fill = ConfrontationalGame)) +
   geom_bar(stat = "identity", position = position_dodge()) +
